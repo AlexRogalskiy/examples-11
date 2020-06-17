@@ -57,6 +57,19 @@ main() {
     #TODO what happens if cluster is already there????
     "${KIND}" create cluster --config kind-config.yaml --loglevel=debug
     
+    	# tell https://tilt.dev to use the registry
+	# https://docs.tilt.dev/choosing_clusters.html#discovering-the-registry
+	for node in $("${KIND}" get nodes); do
+	  kubectl annotate node "${node}" "kind.x-k8s.io/registry=localhost:${reg_port}";
+	done
+
+    # set KUBECONFIG to point to the cluster
+    kubectl cluster-info --context kind-kind
+
+	#setup nginx ingress
+    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/kind/deploy.yaml
+    kubectl wait --namespace ingress-nginx --for=condition=ready pod --selector=app.kubernetes.io/component=controller --timeout=360s
+    
     # set KUBECONFIG to point to the cluster
     KUBECONFIG="$("${KIND}" get kubeconfig-path)"
     export KUBECONFIG
