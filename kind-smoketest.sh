@@ -12,6 +12,8 @@ BIN_DIR="$(mktemp -d)"
 # kind binary will be here
 KIND="${BIN_DIR}/kind"
 
+CURRENT_DIR="$(pwd)"
+
 # cleanup on exit (useful for running locally)
 cleanup() {
     "${KIND}" delete cluster || true
@@ -40,6 +42,7 @@ install_kind_release() {
 main() {
     # get kind
     install_latest_kind
+    cd $CURRENT_DIR
     # create a cluster
     "${KIND}" create cluster --config kind-config.yaml --loglevel=debug
     # set KUBECONFIG to point to the cluster
