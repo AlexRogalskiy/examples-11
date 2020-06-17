@@ -41,7 +41,7 @@ main() {
     # get kind
     install_latest_kind
     # create a cluster
-    "${KIND}" create cluster --loglevel=debug
+    "${KIND}" create cluster --config kind-config.yaml --loglevel=debug
     # set KUBECONFIG to point to the cluster
     KUBECONFIG="$("${KIND}" get kubeconfig-path)"
     export KUBECONFIG
