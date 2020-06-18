@@ -15,8 +15,12 @@ jobs:
           command: |
             sudo apt update
             sudo apt install snapd
-            sudo snap install kubectl --classic      
-      - run: ./kind-smoketest.sh      
+      - run:
+          name: Install Kubectl
+          command: |
+            sudo snap install kubectl --classic
+            kubectl version --client
+      - run: ./kind-smoketest.sh
       - run:
           name: Launch Kubernetes with microk8s
           command: |
