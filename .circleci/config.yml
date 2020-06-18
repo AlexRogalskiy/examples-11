@@ -10,6 +10,7 @@ jobs:
       _SERVICE_OCCURENCE: 5
     steps:
       - checkout
+      - run: ./kind-smoketest.sh      
       - run:
           name: Install Snap
           command: |
@@ -62,4 +63,4 @@ jobs:
             echo "Istio enabled"
 
             # create the namespace where the istio integration test will run
-      - run: ./kind-smoketest.sh
+
