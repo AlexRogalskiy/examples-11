@@ -4,8 +4,8 @@ jobs:
     machine:
       enabled: true
     steps:
-    - checkout
-          - run:
+     - checkout
+     - run:
           name: Install Snap
           command: |
             sudo apt update
